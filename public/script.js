@@ -5,7 +5,7 @@ var model;
 
 function setPosition(e) {
   pos.x = e.clientX - 100;
-  pos.y = e.clientY - 100;
+  pos.y = e.clientY - 200;
 }
 
 function draw(e) {
@@ -30,11 +30,11 @@ function erase() {
 
 function save() {
   var raw = tf.browser.fromPixels(rawImage, 1);
-  console.log("raw--->", raw);
+  // console.log("raw--->", raw);
   var resized = tf.image.resizeBilinear(raw, [28, 28]);
-  console.log("resied---->", resized);
+  // console.log("resied---->", resized);
   var tensor = resized.expandDims(0);
-  console.log("tensor----->", tensor);
+  // console.log("tensor----->", tensor);
   var prediction = model.predict(tensor);
   var pIndex = tf.argMax(prediction, 1).dataSync();
 
@@ -59,10 +59,10 @@ function init() {
 async function run() {
   const lb = document.getElementById("output");
   lb.innerText = "wait for model loading";
-  const MODEL_URL = "http://127.0.0.1:5500/public/model/model.json";
+  const MODEL_URL = "./model/model.json";
   model = await tf.loadLayersModel(MODEL_URL);
-  console.log(model.summary());
-  console.log("model loaded sucessfully, you are ready to predict");
+  // console.log(model.summary());
+  // console.log("model loaded sucessfully, you are ready to predict");
   lb.innerText = "Draw image to predict";
   init();
 }
